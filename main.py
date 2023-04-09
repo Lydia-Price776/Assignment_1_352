@@ -56,14 +56,6 @@ def get_form_data(http_request):
     jsonFile.close()
 
 
-def analyse_form_data():
-    file = open('user_data/user_data.json')
-    data = json.load(file)
-    file.close()
-    print(type(data))
-    for i in data:
-        #keyword, value = item.split(':')
-        print( i, data[i])
 
 
 
