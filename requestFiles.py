@@ -9,6 +9,7 @@ def get_dog_uri():
     print(outmap)
     filename = 'user_data/user_dog_image.jpg'
     get_image(outmap['message'], filename)
+    return filename
 
 
 def get_cat_uri():
@@ -18,6 +19,7 @@ def get_cat_uri():
     [outmap] = response.json()
     filename = 'user_data/user_cat_image.jpg'
     get_image(outmap['url'], filename)
+    return filename
 
 
 def get_duck_uri():
@@ -27,6 +29,7 @@ def get_duck_uri():
     outmap = response.json()
     filename = 'user_data/user_duck_image.jpg'
     get_image(outmap['url'], filename)
+    return filename
 
 
 def get_image(uri, filename):
@@ -36,14 +39,15 @@ def get_image(uri, filename):
             f.write(response.content)
 
 
-def get_movie_():
+def get_movies(title1, title2, title3):
+    movie_list = [get_movie(title1), get_movie(title2), get_movie(title3)]
+    return movie_list
+
+
+def get_movie(given_path):
     host = 'www.omdbapi.com'
     apikey = '?apikey=2820b54'
-    path = '&t=alien'
-    print(f'https://{host}/{apikey}{path}')
+    path = f'&t={given_path}'
     response = requests.get(f'https://{host}/{apikey}{path}')
     outmap = response.json()
-    print(outmap)
-
-
-
+    return outmap['Title'], outmap['Director'], outmap['Year'], outmap['Genre']

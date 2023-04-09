@@ -1,9 +1,10 @@
 import _thread
-import json
 import socket
 
+import json
 from parse import *
 from delivery import *
+from analyse import analyse_form_data
 
 
 def authorised(headers):
@@ -36,8 +37,8 @@ def do_request(connection_socket):
         elif http_request.cmd == 'GET' and http_request.path == '/form':
             deliver_html(connection_socket, 'psycho.html')
         elif http_request.cmd == 'POST' and http_request.path == '/analysis':
-            get_form_data(http_request)
-            analyse_form_data()
+            write_json_datafile(parse_post(http_request.payload), 'user_data/user_data.json')
+            write_json_datafile(analyse_form_data(), 'user_data/analysed_data.json')
         else:
             deliver_404(connection_socket)
 
@@ -48,15 +49,11 @@ def do_request(connection_socket):
     connection_socket.close()
 
 
-def get_form_data(http_request):
-    data = parse_post(http_request.payload)
-    jsonDataStr = json.dumps(data)
-    jsonFile = open('user_data/user_data.json', 'w')
-    jsonFile.write(jsonDataStr)
-    jsonFile.close()
-
-
-
+def write_json_datafile(data, filename):
+    json_data_str = json.dumps(data)
+    json_file = open(filename, 'w')
+    json_file.write(json_data_str)
+    json_file.close()
 
 
 def main(port):
