@@ -14,6 +14,8 @@ def deliver_html(connection_socket, filename):
     content = gobble_file(filename)
     http_header(connection_socket, 'Content-Type: text/html')
     http_body(connection_socket, content.encode())
+
+
 def deliver_jpeg(conn, filename):
     # Deliver content of JPEG image file
     content = gobble_file(filename, binary=True)

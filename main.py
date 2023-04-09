@@ -1,4 +1,5 @@
 import _thread
+import json
 import socket
 
 from parse import *
@@ -30,17 +31,13 @@ def do_request(connection_socket):
 
         deliver_200(connection_socket)
 
-
         if http_request.cmd == 'GET' and http_request.path == '/':
             deliver_html(connection_socket, 'index.html')
         elif http_request.cmd == 'GET' and http_request.path == '/form':
             deliver_html(connection_socket, 'psycho.html')
         elif http_request.cmd == 'POST' and http_request.path == '/analysis':
-            yeet = parse_post(http_request.payload)
-            print(yeet)
-            '''
-            read the form data, do something with it and save it in some appropriate format - JSON
-            '''
+            get_form_data(http_request)
+            analyse_form_data()
         else:
             deliver_404(connection_socket)
 
@@ -49,6 +46,25 @@ def do_request(connection_socket):
         connection_socket.send(b'WWW-Authenticate: Basic realm="Web 159352"')
 
     connection_socket.close()
+
+
+def get_form_data(http_request):
+    data = parse_post(http_request.payload)
+    jsonDataStr = json.dumps(data)
+    jsonFile = open('user_data/user_data.json', 'w')
+    jsonFile.write(jsonDataStr)
+    jsonFile.close()
+
+
+def analyse_form_data():
+    file = open('user_data/user_data.json')
+    data = json.load(file)
+    file.close()
+    print(type(data))
+    for i in data:
+        #keyword, value = item.split(':')
+        print( i, data[i])
+
 
 
 def main(port):

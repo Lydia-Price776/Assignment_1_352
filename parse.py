@@ -27,15 +27,19 @@ def parse_http_request(request):
     return HTTPrequest(cmd, path, headers_dict, payload)
 
 
-def parse_post(pstring):
+def parse_post(post_str):
     pdata = {}
-    items = pstring.strip().split('&')
-
+    items = post_str.strip().split('&')
+    pet_count = 0
     for item in items:
         keyword, value = item.split('=')
         value = value.replace('+', ' ')
         keyword = keyword.replace('%5B', '[')
         keyword = keyword.replace('%5D', ']')
-        pdata[keyword] = value
+        if keyword == "pets[]":
+            pdata[f'pet[{pet_count}]'] = value
+            pet_count += 1
+        else:
+            pdata[keyword] = value
 
     return pdata
