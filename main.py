@@ -1,8 +1,6 @@
 import _thread
-import os
 import socket
 
-import delivery
 from parse import *
 from delivery import *
 
@@ -23,36 +21,26 @@ def authorised(headers):
         return False
 
 
-def get_filename(path):
-    match path.strip('/'):
-        case '':
-            return 'index.html'
-        case 'form':
-            return 'psycho.html'
-        case 'favicon.ico':
-            return 'favicon.ico'
-        case _:
-            return ''
-
-
 def do_request(connection_socket):
     request = connection_socket.recv(10240)
     http_request = parse_http_request(request)
     print(http_request.cmd, http_request.path)
 
     if authorised(http_request.headers):
-        filename = get_filename(http_request.path)
-        file_type = filename.split('.').pop() if filename != '' else ''
-        if os.path.exists(filename):
 
-            deliver_200(connection_socket)
+        deliver_200(connection_socket)
 
-            if file_type == 'html':
-                deliver_html(connection_socket, filename)
-            elif file_type == 'ico':
-                deliver_ico(connection_socket, filename)
-            else:
-                deliver_404(connection_socket)
+
+        if http_request.cmd == 'GET' and http_request.path == '/':
+            deliver_html(connection_socket, 'index.html')
+        elif http_request.cmd == 'GET' and http_request.path == '/form':
+            deliver_html(connection_socket, 'psycho.html')
+        elif http_request.cmd == 'POST' and http_request.path == '/analysis':
+            yeet = parse_post(http_request.payload)
+            print(yeet)
+            '''
+            read the form data, do something with it and save it in some appropriate format - JSON
+            '''
         else:
             deliver_404(connection_socket)
 

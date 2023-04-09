@@ -22,7 +22,20 @@ def parse_http_request(request):
     except ValueError:
         cmd = ''
         path = ''
-        headers = ''
         payload = ''
 
     return HTTPrequest(cmd, path, headers_dict, payload)
+
+
+def parse_post(pstring):
+    pdata = {}
+    items = pstring.strip().split('&')
+
+    for item in items:
+        keyword, value = item.split('=')
+        value = value.replace('+', ' ')
+        keyword = keyword.replace('%5B', '[')
+        keyword = keyword.replace('%5D', ']')
+        pdata[keyword] = value
+
+    return pdata
