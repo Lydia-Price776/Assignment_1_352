@@ -1,3 +1,6 @@
+import json
+
+
 def gobble_file(filename, binary=False):
     """General utility to read entire content of file that could be binary"""
     if binary:
@@ -22,6 +25,14 @@ def deliver_jpeg(conn, filename):
     http_header(conn, 'Content-Type: image/jpeg')
     http_header(conn, 'Accept-Ranges: bytes')
     http_body(conn, content)
+
+
+def deliver_json(conn, filename):
+    # Deliver content of JSON file
+    content = gobble_file(filename)
+    json_data = json.dumps(content)
+    http_header(conn, 'Content-Type: application/json')
+    http_body(conn, json_data.encode())
 
 
 def deliver_ico(conn, filename):

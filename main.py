@@ -1,4 +1,5 @@
 import _thread
+import os
 import socket
 
 import json
@@ -36,6 +37,12 @@ def do_request(connection_socket):
             deliver_html(connection_socket, 'index.html')
         elif http_request.cmd == 'GET' and http_request.path == '/form':
             deliver_html(connection_socket, 'psycho.html')
+        elif http_request.cmd == 'GET' and http_request.path == '/view/input':
+            if os.path.exists('user_data/user_data.json'):
+                deliver_json(connection_socket, 'user_data/user_data.json')
+        elif http_request.cmd == 'GET' and http_request.path == '/view/profile':
+            if os.path.exists('user_data/analysed_data.json'):
+                deliver_json(connection_socket, 'user_data/analysed_data.json')
         elif http_request.cmd == 'POST' and http_request.path == '/analysis':
             write_json_datafile(parse_post(http_request.payload), 'user_data/user_data.json')
             write_json_datafile(analyse_form_data(), 'user_data/analysed_data.json')
