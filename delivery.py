@@ -1,6 +1,3 @@
-import json
-
-
 def gobble_file(filename, binary=False):
     """General utility to read entire content of file that could be binary"""
     if binary:
@@ -12,46 +9,52 @@ def gobble_file(filename, binary=False):
     return content
 
 
-def deliver_html(connection_socket, filename):
+def deliver_html(conn, filename):
     # Deliver content of HTML file
     content = gobble_file(filename)
-    http_header(connection_socket, 'Content-Type: text/html')
-    http_body(connection_socket, content.encode())
+    deliver_200(conn)
+    http_header(conn, 'Content-Type: text/html; charset=utf-8')
+    http_body(conn, content.encode())
 
 
 def deliver_jpeg(conn, filename):
     # Deliver content of JPEG image file
     content = gobble_file(filename, binary=True)
+    deliver_200(conn)
     http_header(conn, 'Content-Type: image/jpeg')
     http_header(conn, 'Accept-Ranges: bytes')
     http_body(conn, content)
 
 
-def deliver_json(conn, filename):
-    # Deliver content of JSON file
-    content = gobble_file(filename)
-    json_data = json.dumps(content)
+def deliver_json_string(conn, jsonstr):
+    # Deliver JSON String
+    deliver_200(conn)
     http_header(conn, 'Content-Type: application/json')
-    http_body(conn, json_data.encode())
+    http_body(conn, jsonstr.encode())
 
 
-def deliver_ico(conn, filename):
-    # Deliver content of ICON image file
-    content = gobble_file(filename, binary=True)
-    http_header(conn, 'Content-Type: image/x-icon')
-    http_header(conn, 'Accept-Ranges: bytes')
-    http_body(conn, content)
+def deliver_json_file(conn, filename):
+    # Deliver JSON server side file
+    content = gobble_file(filename)
+    deliver_json_string(conn, content)
 
 
-def http_header(connection_socket, header_line):
+def deliver_js(conn, filename):
+    content = gobble_file(filename)
+    deliver_200(conn)
+    http_header(conn, 'Content-Type: text/javascript')
+    http_body(conn, content.encode())
+
+
+def http_header(conn, header_line):
     # Send the header line as string instance
-    connection_socket.send((header_line + '\r\n').encode())
+    conn.send((header_line + '\r\n').encode())
 
 
-def http_body(connection_socket, payload):
+def http_body(conn, payload):
     # Send payload as byte string
-    connection_socket.send('\r\n'.encode())
-    connection_socket.send(payload)
+    conn.send('\r\n'.encode())
+    conn.send(payload)
 
 
 def http_status(conn, status):
@@ -59,11 +62,11 @@ def http_status(conn, status):
     conn.send(('HTTP/1.1 ' + status + '\r\n').encode())
 
 
-def deliver_200(connection_socket):
+def deliver_200(conn):
     # Send 200 OK Status response
-    http_status(connection_socket, '200 OK')
+    http_status(conn, '200 OK')
 
 
-def deliver_404(connection_socket):
+def deliver_404(conn):
     # Send 404 not found status response
-    http_status(connection_socket, '404 Not Found')
+    http_status(conn, '404 Not Found')
