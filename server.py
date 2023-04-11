@@ -53,6 +53,10 @@ def do_request(connection_socket):
         elif http_request.path == '/frontend.js':
             deliver_js(connection_socket, 'frontend.js')
 
+        elif http_request.path == '/favicon.ico':
+            deliver_200(connection_socket)
+            deliver_ico(connection_socket, 'favicon.ico')
+
         elif http_request.path.endswith('.jpg'):
             deliver_jpeg(connection_socket, http_request.path[1:])
 

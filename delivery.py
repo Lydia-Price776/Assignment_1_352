@@ -55,6 +55,14 @@ def deliver_js(conn, filename):
     http_body(conn, content.encode())
 
 
+def deliver_ico(conn, filename):
+    # Deliver content of ICON image file
+    content = gobble_file(filename, binary=True)
+    http_header(conn, 'Content-Type: image/x-icon')
+    http_header(conn, 'Accept-Ranges: bytes')
+    http_body(conn, content)
+
+
 def http_header(conn, header_line):
     # Send the header line as string instance
     conn.send((header_line + '\r\n').encode())
