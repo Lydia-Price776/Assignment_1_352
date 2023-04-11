@@ -6,8 +6,8 @@ def get_dog_uri():
     path = 'api/breeds/image/random'
     response = requests.get(f'https://{host}/{path}')
     outmap = response.json()
-    print(outmap)
-    filename = 'user_data/user_dog_image.jpg'
+    components = outmap['message'].split('/')
+    filename = 'user_data/' + components[len(components) - 1]
     get_image(outmap['message'], filename)
     return filename
 
@@ -17,7 +17,8 @@ def get_cat_uri():
     path = 'v1/images/search'
     response = requests.get(f'https://{host}/{path}')
     [outmap] = response.json()
-    filename = 'user_data/user_cat_image.jpg'
+    components = outmap['url'].split('/')
+    filename = 'user_data/' + components[len(components) - 1]
     get_image(outmap['url'], filename)
     return filename
 
@@ -27,7 +28,8 @@ def get_duck_uri():
     path = 'api/v2/random'
     response = requests.get(f'https://{host}/{path}')
     outmap = response.json()
-    filename = 'user_data/user_duck_image.jpg'
+    components = outmap['url'].split('/')
+    filename = 'user_data/' + components[len(components) - 1]
     get_image(outmap['url'], filename)
     return filename
 

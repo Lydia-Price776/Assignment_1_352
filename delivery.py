@@ -39,6 +39,15 @@ def deliver_json_file(conn, filename):
     deliver_json_string(conn, content)
 
 
+def deliver_gif(conn, filename):
+    # Deliver content of GIF image file
+    content = gobble_file(filename, binary=True)
+    deliver_200(conn)
+    http_header(conn, 'Content-Type: image/gif')
+    http_header(conn, 'Accept-Ranges: bytes')
+    http_body(conn, content)
+
+
 def deliver_js(conn, filename):
     content = gobble_file(filename)
     deliver_200(conn)
