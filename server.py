@@ -7,6 +7,7 @@ from delivery import *
 from analyse import analyse_form_data
 
 
+# Authorise the user, and return true if the auth_key matches and false otherwise
 def authorised(headers):
     if 'Authorization' in headers:
         given_key = headers['Authorization']
@@ -23,17 +24,21 @@ def authorised(headers):
         return False
 
 
+# Handles all requests for the server
 def do_request(connection_socket):
     request = connection_socket.recv(10240)
+    # Parses the request so we can use it
     http_request = parse_http_request(request)
     print(http_request.cmd, http_request.path)
 
+    # Dictionary of allowed paths
     use_paths = {'/': 'HTML_Files/index.html', '/form': 'HTML_Files/psycho.html',
                  '/view/input': 'HTML_Files/input.html', '/view/profile': 'HTML_Files/profile.html'
                  }
 
+    # If the user has been authorised, then continue
     if authorised(http_request.headers):
-
+        # Delivers our path URI's
         if http_request.cmd == 'GET' and http_request.path in use_paths:
             deliver_200(connection_socket)
             deliver_html(connection_socket, use_paths[http_request.path])
@@ -42,8 +47,9 @@ def do_request(connection_socket):
             deliver_200(connection_socket)
             write_json_datafile(parse_post(http_request.payload), 'user_data/user_data.json')
             write_json_datafile(analyse_form_data(), 'user_data/analysed_data.json')
-            deliver_json_string(connection_socket, "{Status : Success}")
+            deliver_json_string(connection_socket, '{"Status" : "Success"}')
 
+        # The below handles other useful files/paths
         elif http_request.path == '/user_data/user_data.json':
             deliver_json_file(connection_socket, 'user_data/user_data.json')
 
@@ -53,20 +59,16 @@ def do_request(connection_socket):
         elif http_request.path == '/frontend.js':
             deliver_js(connection_socket, 'frontend.js')
 
-        elif http_request.path == '/favicon.ico':
-            deliver_200(connection_socket)
-            deliver_ico(connection_socket, 'favicon.ico')
-
         elif http_request.path.endswith('.jpg'):
             deliver_jpeg(connection_socket, http_request.path[1:])
 
         elif http_request.path.endswith('.gif'):
             deliver_gif(connection_socket, http_request.path[1:])
 
-        else:
+        else: # If the path doesnt match any of the above, return 404 response
             deliver_404(connection_socket)
 
-    else:
+    else:  # Otherwise request authentication.
         connection_socket.send(b'HTTP/1.1 401 Unauthorised\r\n')
         connection_socket.send(b'WWW-Authenticate: Basic realm="Web 159352"')
 

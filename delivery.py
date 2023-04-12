@@ -1,5 +1,11 @@
-def gobble_file(filename, binary=False):
-    """General utility to read entire content of file that could be binary"""
+"""
+Lydia Price, 200004521
+The below functions are helper functions to deliver relevant information to the web
+"""
+
+
+def read_file_content(filename, binary=False):
+    # General utility to read entire content of file that could be binary
     if binary:
         mode = 'rb'
     else:
@@ -11,7 +17,7 @@ def gobble_file(filename, binary=False):
 
 def deliver_html(conn, filename):
     # Deliver content of HTML file
-    content = gobble_file(filename)
+    content = read_file_content(filename)
     deliver_200(conn)
     http_header(conn, 'Content-Type: text/html; charset=utf-8')
     http_body(conn, content.encode())
@@ -19,7 +25,7 @@ def deliver_html(conn, filename):
 
 def deliver_jpeg(conn, filename):
     # Deliver content of JPEG image file
-    content = gobble_file(filename, binary=True)
+    content = read_file_content(filename, binary=True)
     deliver_200(conn)
     http_header(conn, 'Content-Type: image/jpeg')
     http_header(conn, 'Accept-Ranges: bytes')
@@ -35,13 +41,13 @@ def deliver_json_string(conn, jsonstr):
 
 def deliver_json_file(conn, filename):
     # Deliver JSON server side file
-    content = gobble_file(filename)
+    content = read_file_content(filename)
     deliver_json_string(conn, content)
 
 
 def deliver_gif(conn, filename):
     # Deliver content of GIF image file
-    content = gobble_file(filename, binary=True)
+    content = read_file_content(filename, binary=True)
     deliver_200(conn)
     http_header(conn, 'Content-Type: image/gif')
     http_header(conn, 'Accept-Ranges: bytes')
@@ -49,18 +55,11 @@ def deliver_gif(conn, filename):
 
 
 def deliver_js(conn, filename):
-    content = gobble_file(filename)
+    # Dekiver the contents of a JavaScript fucntion
+    content = read_file_content(filename)
     deliver_200(conn)
     http_header(conn, 'Content-Type: text/javascript')
     http_body(conn, content.encode())
-
-
-def deliver_ico(conn, filename):
-    # Deliver content of ICON image file
-    content = gobble_file(filename, binary=True)
-    http_header(conn, 'Content-Type: image/x-icon')
-    http_header(conn, 'Accept-Ranges: bytes')
-    http_body(conn, content)
 
 
 def http_header(conn, header_line):

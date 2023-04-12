@@ -1,8 +1,14 @@
+"""
+Lydia Price, 20004521
+The below functions aid in determining career suitability and finding movies reccomendations for the user
+"""
+
 import json
 from careerSuitabilty import determine_career_suitability
 from requestFiles import *
 
 
+# Analyses the form data, and returns a dictionary with relevant information
 def analyse_form_data():
     file = open('user_data/user_data.json')
     data = json.load(file)
@@ -32,6 +38,7 @@ def analyse_form_data():
 
 
 def determine_movie_recommendation(career):
+    # Gets movie recommendations based on users career choice
     match career:
         case 'ceo':
             return get_movies('strong', 'bold', 'leader')
@@ -43,3 +50,5 @@ def determine_movie_recommendation(career):
             return get_movies('music', 'soulful', 'tempo')
         case 'model':
             return get_movies('fashion', 'clothes', 'textiles')
+        case _:
+            return get_movies('and', 'the', 'scary')
