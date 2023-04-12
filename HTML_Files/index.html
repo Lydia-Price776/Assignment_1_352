@@ -2,29 +2,37 @@
 <html lang="English">
 <head>
     <title>Psychological Profiling</title>
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../main.css">
 </head>
 
 <script src="../frontend.js"></script>
 
 <body>
+<div id="main">
+    <h1>Psychological Profiling</h1>
+    <hr class="divider">
 
-<h1>Psychological Profiling</h1>
+    <p id="welcome">Welcome to your psychological profile!</p>
+    <div id="info_group">
+        <p id="info"> Click one of the buttons to get started.<br>
+            Please be aware that if you have not yet completed form, <br>
+            there will be no information to display on your profile or
+            input</p>
 
-<p>Welcome to your psychological profile</p>
+        <button type="button" onclick=start_new_form()>
+            Start New Form
+        </button>
 
-<button type="button" onclick=start_new_form()>
-    Start New Form
-</button>
+        <button type="button" onclick=view_form_input()>
+            View Form Input
+        </button>
 
-<button type="button" onclick=view_form_input()>
-    View Form Input
-</button>
+        <button type="button" onclick=view_profile()>
+            View Profile
+        </button>
 
-<button type="button" onclick=view_profile()>
-    View Profile
-</button>
-
-
+    </div>
+</div>
 </body>
+
 </html> 

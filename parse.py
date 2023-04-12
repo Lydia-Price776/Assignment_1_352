@@ -8,7 +8,7 @@ class HTTPrequest:
 
 
 def parse_http_request(request):
-    # Parses the http_request inorder to use later 
+    # Parses the http_request inorder to use later
     headers = request.decode().split('\r\n')
     reqline = headers.pop(0)
     payload = headers.pop()

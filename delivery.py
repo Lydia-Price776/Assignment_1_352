@@ -23,6 +23,14 @@ def deliver_html(conn, filename):
     http_body(conn, content.encode())
 
 
+def deliver_css(conn, filename):
+    # Deliver content of CSS file
+    content = read_file_content(filename)
+    deliver_200(conn)
+    http_header(conn, 'Content-Type: text/css')
+    http_body(conn, content.encode())
+
+
 def deliver_jpeg(conn, filename):
     # Deliver content of JPEG image file
     content = read_file_content(filename, binary=True)

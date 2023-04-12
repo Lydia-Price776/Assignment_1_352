@@ -33,7 +33,8 @@ def do_request(connection_socket):
 
     # Dictionary of allowed paths
     use_paths = {'/': 'HTML_Files/index.html', '/form': 'HTML_Files/psycho.html',
-                 '/view/input': 'HTML_Files/input.html', '/view/profile': 'HTML_Files/profile.html'
+                 '/view/input': 'HTML_Files/input.html',
+                 '/view/profile': 'HTML_Files/profile.html'
                  }
 
     # If the user has been authorised, then continue
@@ -59,14 +60,19 @@ def do_request(connection_socket):
         elif http_request.path == '/frontend.js':
             deliver_js(connection_socket, 'frontend.js')
 
+
+        elif http_request.path == '/main.css':
+            deliver_css(connection_socket, 'main.css')
+
         elif http_request.path.endswith('.jpg'):
             deliver_jpeg(connection_socket, http_request.path[1:])
 
         elif http_request.path.endswith('.gif'):
             deliver_gif(connection_socket, http_request.path[1:])
 
-        else: # If the path doesnt match any of the above, return 404 response
+        else:  # If the path doesnt match any of the above, return 404 response
             deliver_404(connection_socket)
+
 
     else:  # Otherwise request authentication.
         connection_socket.send(b'HTTP/1.1 401 Unauthorised\r\n')
