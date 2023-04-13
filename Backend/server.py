@@ -7,6 +7,8 @@ import os
 import socket
 
 import json
+import sys
+
 from parse import *
 from delivery import *
 from analyse import analyse_form_data
@@ -111,7 +113,7 @@ def main(port):
 
     # Start listening for new connections
     my_socket.listen()
-    print("The server is ready to receive messages on port: ", server_port)
+    print("The server is ready to receive messages on port: ", port)
 
     while True:
         # Accept a message from the client
@@ -122,5 +124,9 @@ def main(port):
 
 
 if __name__ == '__main__':
-    server_port = 8080
+    if len(sys.argv) > 1:
+        server_port = int(sys.argv[1])
+    else:
+        server_port = 8080
+
     main(server_port)

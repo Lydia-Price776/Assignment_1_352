@@ -4,28 +4,32 @@
 */
 function start_new_form() {
     // Opens new psych form in a new tab
-    const uri = "http://localhost:8080/form";
+    let current_port = window.location.port; // Added to work in a docker container
+    const uri = `http://localhost:${current_port}/form`;
     const config = "";
     const win = window.open(uri, "", config);
 }
 
 function view_form_input() {
     // Opens view/input in a new tab
-    const uri = "http://localhost:8080/view/input";
+    let current_port = window.location.port;// Added to work in a docker container
+    const uri = `http://localhost:${current_port}/input`;
     const config = "";
     const win = window.open(uri, "", config);
 }
 
 function view_profile() {
     //Open view/profile in new tab
-    const uri = "http://localhost:8080/view/profile";
+    let current_port = window.location.port;// Added to work in a docker container
+    const uri = `http://localhost:${current_port}/view/profile`;
     const config = "";
     const win = window.open(uri, "", config);
 }
 
 function main_page() {
     //Return to the main page after analysis
-    const uri = "http://localhost:8080";
+    let current_port = window.location.port; // Added to work in a docker container
+    const uri = `http://localhost:${current_port}`;
     const config = "";
     const win = window.open(uri, "", config);
 }
