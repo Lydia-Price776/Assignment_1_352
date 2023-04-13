@@ -3,12 +3,33 @@
 <head>
     <script src="../frontend.js"></script>
     <title>View Input Data</title>
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../main.css">
 
 </head>
 <body onload=get_input_data()>
-<h2>Review Your Input Data:</h2>
 
-<pre id="data"></pre>
+<div id="container">
+    <h1>Review Your Input Data:</h1>
+    <hr class="divider">
+    <div id="data">
+        <div id="first">
+            <h2>Personal Data:</h2>
+            <pre id="personal_data"></pre>
+        </div>
+        <div id="second">
+            <h2>Question Answers:</h2>
+            <div id="question_container">
+                <pre id="question_data_1"></pre>
+                <pre id="question_data_2"></pre>
+            </div>
+        </div>
+        <hr class="divider">
+
+        <div id="third">
+            <h2>Pets Selected (if any):</h2>
+            <pre id="pet_data"></pre>
+        </div>
+    </div>
+</div>
 </body>
 </html>

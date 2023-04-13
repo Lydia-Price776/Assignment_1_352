@@ -27,12 +27,16 @@ def analyse_form_data():
     }
     if "gender" in data:
         analyse['Gender'] = data['gender']
-    if "pet[0]" in data:
-        analyse['Dog'] = get_dog_uri()
-    if "pet[1]" in data:
-        analyse['Cat'] = get_cat_uri()
-    if "pet[1]" in data:
-        analyse['Duck'] = get_duck_uri()
+
+    for key in data:
+        if key.startswith('pet'):
+            match data[key]:
+                case 'dog':
+                    analyse['Dog'] = get_dog_uri()
+                case 'cat':
+                    analyse['Cat'] = get_cat_uri()
+                case 'duck':
+                    analyse['Duck'] = get_duck_uri()
 
     return analyse
 
@@ -43,7 +47,7 @@ def determine_movie_recommendation(career):
         case 'ceo':
             return get_movies('strong', 'bold', 'leader')
         case 'doctor':
-            return get_movies('medicine', 'Dr', 'bones')
+            return get_movies('medicine', 'help', 'bones')
         case 'astronaut':
             return get_movies('space', 'rocket', 'star')
         case 'rockstar':

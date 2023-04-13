@@ -2,19 +2,33 @@
     text-align: center;
     border: 4px solid #4CAF50;
     border-radius: 4px;
-    width: 60vw;
-    height: 500px;
+    width: 700px;
+    height: 450px;
     margin: auto;
+    font-family: "Times New Roman", serif;
 }
 
 h1 {
     font-size: 60px;
     margin-top: 40px;
     margin-bottom: 20px;
+    text-align: center;
+    font-family: "Times New Roman", serif;
+
 }
+
+h2 {
+    font-size: 40px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: "Times New Roman", serif;
+}
+
 
 #welcome {
     font-size: 30px;
+    text-align: center;
 }
 
 button {
@@ -26,12 +40,34 @@ button {
     border-radius: 4px;
     width: 160px;
     margin: 10px;
-    height: 50px;
+    height: 40px;
 }
 
 button:hover {
     background-color: #4CAF50;
     color: white;
+}
+
+
+form {
+    text-align: center;
+}
+
+#animals {
+    text-align: left;
+    display: inline-block;
+}
+
+#questions {
+    text-align: left;
+    display: inline-block;
+    width: 400px;
+}
+
+#personal {
+    text-align: left;
+    display: inline-block;
+    width: 500px;
 }
 
 #info {
@@ -40,14 +76,125 @@ button:hover {
 }
 
 hr.divider {
-    border-top: 3px solid #4CAF50;
-    width: 50vw
+    border-top: 2px solid #4CAF50;
+    width: 600px
 }
 
 #info_group {
     border: 3px solid #4CAF50;
-    width: 45vw;
+    width: 600px;
     text-align: center;
     margin: auto;
     border-radius: 4px;
+}
+
+#data {
+    width: 900px;
+    font-family: "Times New Roman", serif;
+    margin: auto;
+    height: auto;
+}
+
+#first {
+    width: 450px;
+    float: left;
+    text-align: center;
+}
+
+#second {
+    width: 450px;
+    float: left;
+    text-align: center;
+
+}
+
+#third {
+    width: 400px;
+    text-align: center;
+    margin: auto;
+}
+
+#question_container {
+    width: 400px;
+    text-align: center;
+    margin-left: 60px;
+}
+
+#question_data_1 {
+    text-align: left;
+    width: 200px;
+    float: left;
+}
+
+#question_data_2 {
+    text-align: left;
+    width: 200px;
+    float: left;
+}
+
+#personal_data {
+    margin: auto;
+    display: inline-block;
+    text-align: left;
+}
+
+#container {
+    margin: auto;
+    text-align: center;
+
+}
+
+#profile_details {
+    font-family: "Times New Roman", serif;
+    margin: auto;
+    height: auto;
+    display: inline-block;
+    text-align: left;
+}
+
+#movie_data {
+    width: 90%;
+    text-align: center;
+    margin: auto;
+}
+
+
+#Movie_1 {
+    font-family: "Times New Roman", serif;
+    margin: auto;
+    height: auto;
+    display: inline-block;
+    text-align: left;
+    padding-left: 30px;
+    padding-right: 30px;
+
+}
+
+#Movie_2 {
+    font-family: "Times New Roman", serif;
+    margin: auto;
+    height: auto;
+    display: inline-block;
+    text-align: left;
+    padding-left: 30px;
+    padding-right: 30px;
+
+}
+
+#Movie_3 {
+    font-family: "Times New Roman", serif;
+    margin: auto;
+    height: auto;
+    display: inline-block;
+    text-align: left;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#pet_data {
+    text-align: center;
+}
+
+#analyse{
+    text-align: center;
 }

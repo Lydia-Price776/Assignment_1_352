@@ -3,27 +3,32 @@
 <head>
     <script src="../frontend.js"></script>
     <title>View Profile Results</title>
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="../main.css">
 
 </head>
 <body onload=get_profile_data()>
 <h1>Review Your Profile Results:</h1>
-<h2 id="details">Your Details:</h2>
+<hr class="divider">
+<div id="container">
+    <h2 id="details">Your Details:</h2>
 
-<pre id="data"></pre>
+    <pre id="profile_details"></pre>
+</div>
+<hr class="divider">
 
 <h2 id="Movies">Movies You May Like:</h2>
-
-<pre id="Movie 1"></pre>
-<pre id="Movie 2"></pre>
-<pre id="Movie 3"></pre>
-
+<div id="movie_data">
+    <pre id="Movie_1"></pre>
+    <pre id="Movie_2"></pre>
+    <pre id="Movie_3"></pre>
+</div>
+<hr class="divider">
 <pre id="Pet"></pre>
-
-<canvas id="Dog"></canvas>
-<canvas id="Cat"></canvas>
-<canvas id="Duck"></canvas>
-
+<div id="pet_data">
+    <canvas id="Dog"></canvas>
+    <canvas id="Cat"></canvas>
+    <canvas id="Duck"></canvas>
+</div>
 </body>
 
 

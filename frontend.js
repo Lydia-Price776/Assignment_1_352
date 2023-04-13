@@ -35,10 +35,24 @@ function get_input_data() {
     let xmlhttp = new XMLHttpRequest();
     xmlhttp.onload = function () {
         let data = JSON.parse(xmlhttp.responseText)
-
+        let count = 0
         for (const key in data) {
-            document.getElementById('data').innerHTML +=
-                `<b> ${key}:</b> ${data[key]}\n\r`
+            if (key.startsWith('question')) {
+                if (count < 10) {
+                    document.getElementById('question_data_1').innerHTML +=
+                        `<b> ${key}:</b> ${data[key]}\n\r`
+                } else {
+                    document.getElementById('question_data_2').innerHTML +=
+                        `<b> ${key}:</b> ${data[key]}\n\r`
+                }
+                count++
+            } else if (key.startsWith('pet')) {
+                document.getElementById('pet_data').innerHTML +=
+                    `${data[key]}\n\r`
+            } else {
+                document.getElementById('personal_data').innerHTML +=
+                    `<b> ${key}:</b> ${data[key]}\n\r`
+            }
         }
 
     }
@@ -60,7 +74,7 @@ function get_profile_data() {
             } else if (key === 'Movies') { //For the Movie recommendations, we want to format this separately
                 format_movie(data[key])
             } else {
-                document.getElementById('data').innerHTML += `<b>${key}:</b> ${data[key]}\n\r`
+                document.getElementById('profile_details').innerHTML += `<b>${key}:</b> ${data[key]}\n\r`
             }
         }
 
@@ -86,15 +100,13 @@ function get_image(key, value) {
         canv.width = newWidth
         canv.height = newHeight
         ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, newWidth, newHeight);
-
     });
 }
 
 function format_movie(movies) {
     // Format each of the movie recommendations
     for (let i = 0; i < movies.length; i++) {
-        console.log(typeof `Movie ${i + 1}`)
-        document.getElementById(`Movie ${i + 1}`).innerHTML =
+        document.getElementById(`Movie_${i + 1}`).innerHTML =
             `<b>Title: </b> ${movies[i][0]} \n\r` +
             `<b>Director: </b> ${movies[i][1]} \n\r` +
             `<b>Date Released: </b> ${movies[i][2]} \n\r` +

@@ -48,7 +48,8 @@ def do_request(connection_socket):
             deliver_200(connection_socket)
             write_json_datafile(parse_post(http_request.payload), 'user_data/user_data.json')
             write_json_datafile(analyse_form_data(), 'user_data/analysed_data.json')
-            deliver_json_string(connection_socket, '{"Status" : "Success"}')
+            #deliver_json_string(connection_socket, '{"Status":"Success"}')
+            deliver_html(connection_socket, 'HTML_Files/analysis.html')
 
         # The below handles other useful files/paths
         elif http_request.path == '/user_data/user_data.json':
