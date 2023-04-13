@@ -27,18 +27,18 @@ def authorised(headers):
 # Handles all requests for the server
 def do_request(connection_socket):
     request = connection_socket.recv(10240)
+    print(request)
     # Parses the request so we can use it
     http_request = parse_http_request(request)
     print(http_request.cmd, http_request.path)
 
-    # Dictionary of allowed paths
-    use_paths = {'/': 'Frontend/HTML_Files/index.html', '/form': 'Frontend/HTML_Files/psycho.html',
-                 '/view/input': 'Frontend/HTML_Files/input.html',
-                 '/view/profile': 'Frontend/HTML_Files/profile.html'
-                 }
-
     # If the user has been authorised, then continue
     if authorised(http_request.headers):
+        # Dictionary of allowed paths
+        use_paths = {'/': 'Frontend/HTML_Files/index.html', '/form': 'Frontend/HTML_Files/psycho.html',
+                     '/view/input': 'Frontend/HTML_Files/input.html',
+                     '/view/profile': 'Frontend/HTML_Files/profile.html'
+                     }
         # Delivers our path URI's
         if http_request.cmd == 'GET' and http_request.path in use_paths:
             deliver_200(connection_socket)
