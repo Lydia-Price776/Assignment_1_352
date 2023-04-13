@@ -1,3 +1,7 @@
+"""
+Lydia Price, 20004521
+The below functions aid in parsing requests and posts
+"""
 class HTTPrequest:
 
     def __init__(self, cmd, path, headers, payload):

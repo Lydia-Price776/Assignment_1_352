@@ -1,4 +1,9 @@
+"""
+Lydia Price, 20004521
+This is the main server component
+"""
 import _thread
+import os
 import socket
 
 import json
@@ -27,10 +32,8 @@ def authorised(headers):
 # Handles all requests for the server
 def do_request(connection_socket):
     request = connection_socket.recv(10240)
-    print(request)
     # Parses the request so we can use it
     http_request = parse_http_request(request)
-    print(http_request.cmd, http_request.path)
 
     # If the user has been authorised, then continue
     if authorised(http_request.headers):
@@ -41,36 +44,46 @@ def do_request(connection_socket):
                      }
         # Delivers our path URI's
         if http_request.cmd == 'GET' and http_request.path in use_paths:
-            deliver_200(connection_socket)
-            deliver_html(connection_socket, use_paths[http_request.path])
+            if os.path.exists(use_paths[http_request.path]):
+                deliver_200(connection_socket)
+                deliver_html(connection_socket, use_paths[http_request.path])
 
         elif http_request.cmd == 'POST' and http_request.path == '/analysis':
-            deliver_200(connection_socket)
-            write_json_datafile(parse_post(http_request.payload), 'Backend/user_data/user_data.json')
-            write_json_datafile(analyse_form_data(), 'Backend/user_data/analysed_data.json')
-            deliver_html(connection_socket, 'Frontend/HTML_Files/analysis.html')
+            if os.path.exists('Backend/user_data/user_data.json'):
+                deliver_200(connection_socket)
+                write_json_datafile(parse_post(http_request.payload), 'Backend/user_data/user_data.json')
+                if os.path.exists('Backend/user_data/analysed_data.json'):
+                    deliver_200(connection_socket)
+                    write_json_datafile(analyse_form_data(), 'Backend/user_data/analysed_data.json')
+                if os.path.exists('Frontend/HTML_Files/analysis.html'):
+                    deliver_html(connection_socket, 'Frontend/HTML_Files/analysis.html')
 
         # The below handles other useful files/paths
         elif http_request.path == '/user_data/user_data.json':
-            deliver_json_file(connection_socket, 'Backend/user_data/user_data.json')
+            if os.path.exists('Backend/user_data/user_data.json'):
+                deliver_json_file(connection_socket, 'Backend/user_data/user_data.json')
 
         elif http_request.path == '/user_data/analysed_data.json':
-            deliver_json_file(connection_socket, 'Backend/user_data/analysed_data.json')
+            if os.path.exists('Backend/user_data/analysed_data.json'):
+                deliver_json_file(connection_socket, 'Backend/user_data/analysed_data.json')
 
         elif http_request.path == '/frontend.js':
-            deliver_js(connection_socket, 'Frontend/frontend.js')
-
+            if os.path.exists('Frontend/frontend.js'):
+                deliver_js(connection_socket, 'Frontend/frontend.js')
 
         elif http_request.path == '/main.css':
-            deliver_css(connection_socket, 'Frontend/main.css')
+            if os.path.exists('Frontend/main.css'):
+                deliver_css(connection_socket, 'Frontend/main.css')
 
         elif http_request.path.endswith('.jpg'):
-            deliver_jpeg(connection_socket, http_request.path[1:])
+            if os.path.exists(http_request.path[1:]):
+                deliver_jpeg(connection_socket, http_request.path[1:])
 
         elif http_request.path.endswith('.gif'):
-            deliver_gif(connection_socket, http_request.path[1:])
+            if os.path.exists(http_request.path[1:]):
+                deliver_gif(connection_socket, http_request.path[1:])
 
-        else:  # If the path doesnt match any of the above, return 404 response
+        else:  # If the path doesn't match any of the above, return 404 response
             deliver_404(connection_socket)
 
 

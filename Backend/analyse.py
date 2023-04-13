@@ -1,6 +1,6 @@
 """
 Lydia Price, 20004521
-The below functions aid in determining career suitability and finding movies reccomendations for the user
+The below functions aid in determining career suitability and finding movies recommendations for the user
 """
 
 import json

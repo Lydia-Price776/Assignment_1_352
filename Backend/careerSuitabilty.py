@@ -1,3 +1,8 @@
+"""
+Lydia Price, 20004521
+The below functions aid in determining career suitability for the users chosen career
+"""
+
 from questionAnalysisCareer import *
 
 

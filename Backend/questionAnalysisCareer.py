@@ -1,3 +1,9 @@
+"""
+Lydia Price, 20004521
+The below functions aid in determining career suitability by determining the users answer to each question
+"""
+
+
 # Is talkative?
 def is_talkative(data):
     if int(data['question[1]']) >= 3:
