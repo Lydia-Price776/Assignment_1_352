@@ -8,7 +8,7 @@ def get_dog_uri():
     response = requests.get(f'https://{host}/{path}')
     outmap = response.json()
     components = outmap['message'].split('/')
-    filename = 'user_data/' + components[len(components) - 1]  # Name the file from the last component of the URI
+    filename = 'Backend/user_data/' + components[len(components) - 1]  # Name the file from the last component of the URI
     get_image(outmap['message'], filename)
     return filename
 
@@ -20,7 +20,7 @@ def get_cat_uri():
     response = requests.get(f'https://{host}/{path}')
     [outmap] = response.json()
     components = outmap['url'].split('/')
-    filename = 'user_data/' + components[len(components) - 1]  # Name the file from the last component of the URI
+    filename = 'Backend/user_data/' + components[len(components) - 1]  # Name the file from the last component of the URI
     get_image(outmap['url'], filename)
     return filename
 
@@ -32,7 +32,7 @@ def get_duck_uri():
     response = requests.get(f'https://{host}/{path}')
     outmap = response.json()
     components = outmap['url'].split('/')
-    filename = 'user_data/' + components[len(components) - 1]  # Name the file from the last component of the URI
+    filename = 'Backend/user_data/' + components[len(components) - 1]  # Name the file from the last component of the URI
     get_image(outmap['url'], filename)
     return filename
 

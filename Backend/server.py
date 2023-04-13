@@ -32,9 +32,9 @@ def do_request(connection_socket):
     print(http_request.cmd, http_request.path)
 
     # Dictionary of allowed paths
-    use_paths = {'/': 'HTML_Files/index.html', '/form': 'HTML_Files/psycho.html',
-                 '/view/input': 'HTML_Files/input.html',
-                 '/view/profile': 'HTML_Files/profile.html'
+    use_paths = {'/': 'Frontend/HTML_Files/index.html', '/form': 'Frontend/HTML_Files/psycho.html',
+                 '/view/input': 'Frontend/HTML_Files/input.html',
+                 '/view/profile': 'Frontend/HTML_Files/profile.html'
                  }
 
     # If the user has been authorised, then continue
@@ -46,24 +46,23 @@ def do_request(connection_socket):
 
         elif http_request.cmd == 'POST' and http_request.path == '/analysis':
             deliver_200(connection_socket)
-            write_json_datafile(parse_post(http_request.payload), 'user_data/user_data.json')
-            write_json_datafile(analyse_form_data(), 'user_data/analysed_data.json')
-            #deliver_json_string(connection_socket, '{"Status":"Success"}')
-            deliver_html(connection_socket, 'HTML_Files/analysis.html')
+            write_json_datafile(parse_post(http_request.payload), 'Backend/user_data/user_data.json')
+            write_json_datafile(analyse_form_data(), 'Backend/user_data/analysed_data.json')
+            deliver_html(connection_socket, 'Frontend/HTML_Files/analysis.html')
 
         # The below handles other useful files/paths
         elif http_request.path == '/user_data/user_data.json':
-            deliver_json_file(connection_socket, 'user_data/user_data.json')
+            deliver_json_file(connection_socket, 'Backend/user_data/user_data.json')
 
         elif http_request.path == '/user_data/analysed_data.json':
-            deliver_json_file(connection_socket, 'user_data/analysed_data.json')
+            deliver_json_file(connection_socket, 'Backend/user_data/analysed_data.json')
 
         elif http_request.path == '/frontend.js':
-            deliver_js(connection_socket, 'frontend.js')
+            deliver_js(connection_socket, 'Frontend/frontend.js')
 
 
         elif http_request.path == '/main.css':
-            deliver_css(connection_socket, 'main.css')
+            deliver_css(connection_socket, 'Frontend/main.css')
 
         elif http_request.path.endswith('.jpg'):
             deliver_jpeg(connection_socket, http_request.path[1:])

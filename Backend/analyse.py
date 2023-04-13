@@ -10,7 +10,7 @@ from requestFiles import *
 
 # Analyses the form data, and returns a dictionary with relevant information
 def analyse_form_data():
-    file = open('user_data/user_data.json')
+    file = open('Backend/user_data/user_data.json')
     data = json.load(file)
     file.close()
     career_suitability = determine_career_suitability(data, data['job'])
